@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="file" type="file">
+    <button id='btn' onclick="send()">发送</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</body>
+<script>
+    function send() {
+        let inputBox = document.getElementById('file');
+        let fileList = inputBox.files;
+        let fromData
+        if (fileList) {
+            fromData = new FormData();
+            for (file of fileList) {
+                fromData.append('file', file);
+            }
+        }
+        axios.post('http://localhost:3000/user', fromData, {
+            "content-Type": "multipart/form-data"
+        })
+    }
+</script>
+
+</html>

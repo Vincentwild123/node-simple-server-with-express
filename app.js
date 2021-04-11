@@ -1,34 +1,29 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 //import the router manager
 const routers = require('./routers/index.js')
-const plugins = require('./plugins/index.js')
-const middlewares = require('./middleware/index.js')
 //create the app instance
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-//set the plugin
-for (let key of Object.keys(plugins)) {
-  key === 'logger' ? app.use(plugins[key]('dev')) : app.use(plugins[key]())
-}
-
-//set the inner plugin
+//set the built-in middleware
 app.use(express.json());
-// app.use(express.urlencoded({
-//   extended: false
-// }))
+app.use(express.urlencoded({
+  extended: false
+}))
+
+app.use(cookieParser({
+  extended: false
+}))
+app.use(logger('dev'))
+
 
 //set the static resourse path
 app.use(express.static(path.join(__dirname, 'public')));
-
-//set the middlewares
-for (const middleware of middlewares) {
-  app.use(middleware);
-}
 
 //set the cross orgin middleware
 app.all("*", function (req, res, next) {
@@ -43,7 +38,7 @@ app.all("*", function (req, res, next) {
 
 //set the routers
 app.use('/', routers.rootRouter);
-app.use('/user', routers.usersRouter);
+app.use('/user', routers.userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

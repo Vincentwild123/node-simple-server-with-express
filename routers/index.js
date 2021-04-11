@@ -1,8 +1,8 @@
 const rootRouter = require('./root.js');
-const usersRouter = require('./user.js');
+const userRouter = require('./user.js');
 
 
 module.exports = {
     rootRouter,
-    usersRouter
+    userRouter
 }
