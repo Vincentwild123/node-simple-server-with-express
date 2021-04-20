@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //import the router manager
 const routers = require('./routers/index.js')
+const uploadFile = require('@vinvincent/uploadFile')
 //create the app instance
 var app = express();
 // view engine setup
@@ -20,7 +21,7 @@ app.use(cookieParser({
   extended: false
 }))
 app.use(logger('dev'))
-
+app.use(uploadFile('./uploadfiles'))
 
 //set the static resourse path
 app.use(express.static(path.join(__dirname, 'public')));

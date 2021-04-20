@@ -8,6 +8,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@vinvincent/uploadfile": "^1.0.0",
     "chalk": "^4.1.0",
     "connect-multiparty": "^2.2.0",
     "cookie-parser": "~1.4.4",
